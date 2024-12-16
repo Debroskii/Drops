@@ -42,6 +42,7 @@ class Engine {
         this.drops = []
         this.gravity = createVector(0, gravity)
         this.wind = [-PI / 2, 1, createVector(0, 0)]
+        this.next_wind_impulse = 5
 
         for (var i = 0; i < this.count; i++) {
             this.drops.push(RainDrop.generate())
@@ -51,13 +52,14 @@ class Engine {
     loop(rain_color, rain_alpha) {
         for(let drop of this.drops) {
 
-            if (frameCount % (40 * 5) == 0) {
-                this.wind[0] = -PI / 2 + random(-PI / 10, PI / 10)
+            if (frameCount % (40 * this.next_wind_impulse) == 0) {
+                this.wind[0] = -PI / 2 + random(-PI / 6, PI / 6)
                 this.wind[1] = random(0.5, 1)
+                this.next_wind_impulse = round(random(3, 10))
             }
 
-            this.wind[2].x += ((cos(this.wind[0]) * this.wind[1]) - this.wind[2].x) * 0.001
-            this.wind[2].y += ((sin(this.wind[0]) * this.wind[1] / 2) - this.wind[2].y) * 0.001
+            this.wind[2].x += ((cos(this.wind[0]) * this.wind[1]) - this.wind[2].x) * 0.00025
+            this.wind[2].y += ((sin(this.wind[0]) * this.wind[1] / 2) - this.wind[2].y) * 0.00025
 
             drop.update(this.gravity.copy().add(this.wind[2]))
             drop.draw(rain_color, rain_alpha)

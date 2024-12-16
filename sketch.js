@@ -5,7 +5,6 @@ var SHOW_UI = true
 var RAIN_SOUND = true
 var CONFIG = false
 
-
 let ui;
 let action_bar;
 let config_bar;
@@ -58,7 +57,7 @@ function toggleUI() {
     action_bar.attribute("style", "backdrop-filter: none")
 
     toggle_ui_icon.attribute("src", "assets/hidden.png")
-    toggle_ui_icon.attribute("style", "opacity: 100%;")
+    toggle_ui_icon.attribute("style", "opacity: 35%;")
 
     toggle_sound_button.hide()
     toggle_config_button.hide()
@@ -69,6 +68,7 @@ function toggleUI() {
 function preload() {
   rain_loop_audio = loadSound('assets/rain_loop.mp3')
   rain_loop_audio.setVolume(0.25)
+  rain_loop_audio.setLoop(true)
 }
 
 function setup() {
@@ -142,7 +142,7 @@ function draw() {
   if(SHOW_UI) {
     fill(0, 255, 0);
     textSize(8)
-    text("FPS: " + round(frameRate()) + "\t Drops: " + engine.count, 10, 690)
+    text("FPS: " + round(frameRate()), 10, 690)
   }
 
   if(RAIN_SOUND) {
